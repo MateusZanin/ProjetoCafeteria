@@ -1,0 +1,70 @@
+
+
+Cliente
+CREATE TABLE cliente(
+idcliente         int identity(1,1)          primary key,
+nm_cliente     varchar(50)                      not null,
+telefone          char(11)                            not null,
+cpf                  char(11)                 not null unique 
+);
+go
+
+
+Mesa
+CREATE TABLE mesa(
+idmesa               int identity(1,1)     primary key,
+qtde_lugares      tinyint,
+status                 char(1)                        not null,
+ambiente            char(1)                        not null
+);
+go
+
+Comanda
+CREATE TABLE comanda(
+idcomanda               int identity(1,1)       primary key,
+datahora_entrada    datetime                      not null,
+datahora_saida        datetime,
+idmesa                      int                               not null,
+idcliente                    int                               not null,
+
+constraint fk_coamnda_cliente foreign key(idcliente)
+references cliente (idcliente),
+constraint fk_coamnda_mesa foreign key(idmesa)
+references mesa (idmesa)
+);
+go
+
+Cardápio
+CREATE TABLE cardapio(
+idcardapio           int identity(1,1)       primary key,
+valor                    numeric                        not null,
+nome                   varchar(80)                   not null,
+classe_produto    char(1)                          not null 
+);
+go
+
+Pedidos
+CREATE TABLE  pedidos(
+idpedido         int identity(1,1)     primary key,
+idcomanda      int                              not null,
+idcardapio       int                              not null,
+qtde                 tinyint                        not null,
+
+constraint fk_epdidos_cardapio foreign key(idcardapio)
+references cardapio (idcardapio),
+constraint fk_pedido_comanda foreign key(idcomanda)
+references comanda (idcomanda)
+);
+go
+
+Cardápio_Itens
+CREATE TABLE cardapio_itens(
+icardapio_itens   int identity(1,1)   primary key,
+nome                   varchar(80)                 nome,
+qtde                     tinyint                     not null,
+idcardapio           int                           not null,
+
+constraint fk_cardapio_itens foreign key(idcardapio)
+references cardapio (idcardapio)
+);
+go
