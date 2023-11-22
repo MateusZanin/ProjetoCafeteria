@@ -1,1 +1,57 @@
+table cliente {
+id_cliente integer [primary key]
+nm_cliente   varchar(50)                      
+telefone  char(11)                            
+cpf    char(11)               
+}
 
+TABLE mesa{
+id_mesa  varchar [primary key]  
+qtde_lugares  tinyint   
+status char(1)                                          
+ambiente  char(1)                            
+}
+
+TABLE comanda{
+id_comanda  int  [primary key]     
+datahora_saida  datatime 
+id_mesa int                                                 
+id_cliente integer    
+id_pedido integer                                         
+}
+
+
+TABLE cardapio{
+id_cardapio integer [primary key]  
+valor numeric                                 
+nome  varchar(80)                               
+classe_produto char(1)                       
+}
+
+
+TABLE pedidos {
+id_pedido integer [primary key]         
+id_comanda  integer       
+id_cardapio   integer     
+qtde     tinyint
+}          
+
+TABLE cardapio_itens{
+cardapio_itens   int  [primary key]  
+nome                   varchar(80)
+qtde                     tinyint                
+id_cardapio           int     
+}
+
+
+Ref: "cliente"."id_cliente" < "comanda"."id_cliente"
+
+Ref: "mesa"."id_mesa" < "comanda"."id_mesa"
+
+Ref: "cardapio"."id_cardapio" < "cardapio_itens"."id_cardapio"
+
+Ref: "cardapio"."id_cardapio" < "pedidos"."id_cardapio"
+
+Ref: "comanda"."id_comanda" < "pedidos"."id_comanda"
+
+Ref: "pedidos"."id_pedido" < "comanda"."id_pedido"
