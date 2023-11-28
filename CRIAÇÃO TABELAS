@@ -68,3 +68,22 @@ constraint fk_cardapio_itens foreign key(idcardapio)
 references cardapio (idcardapio)
 );
 go
+
+CREATE TABLE pagamento(
+    idpagamento         int identity(1,1)   primary key,
+    idcomanda           int                             not null,
+    valor_pago          numeric(10,2)          not null,
+    datahora_pagamento  datetime                    not null,
+
+    constraint fk_pagamento_comanda foreign key(idcomanda)
+    references comanda (idcomanda)
+
+
+CREATE TABLE funcionario(
+    idfuncionario     int identity(1,1)   primary key,
+    nome              varchar(50)          not null,
+    cargo             varchar(50)          not null,
+    salario           numeric(10,2)        not null,
+);
+
+
