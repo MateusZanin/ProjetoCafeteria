@@ -1,0 +1,24 @@
+Listar todos os clientes que fizeram pedidos:
+SELECT nm_cliente
+FROM cliente
+WHERE id_cliente IN (SELECT id_cliente FROM comanda);
+
+
+
+Calcular o total pago em cada comanda:
+SELECT id_comanda, 
+       (SELECT SUM(valor_pago) FROM pagamento WHERE id_comanda = c.id_comanda) AS total_pago
+FROM comanda c;
+
+
+
+Listar os nomes dos funcionários e a quantidade de pedidos que eles atenderam:
+SELECT nome_funcionario,
+       (SELECT COUNT(id_pedido) FROM comanda WHERE id_funcionario = f.id_funcionario) AS total_pedidos_atendidos
+FROM funcionario f;
+
+
+Encontrar o item de cardápio mais popular (com maior quantidade pedida):
+SELECT nome
+FROM cardapio_itens
+WHERE cardapio_itens = (SELECT TOP 1 id_cardapio FROM pedidos GROUP BY id_cardapio ORDER BY COUNT(id_pedido) DESC);
